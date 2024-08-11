@@ -4,20 +4,29 @@ class User < ApplicationRecord
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable
 
+  has_many :post_images, dependent: :destroy
+
+  # ActiveStorageを通して、プロフィール写真をアップできるようにする設定
+  has_one_attached :profile_image
+
   # deviseですでに定義されているメソッド⇒サインインしたらaboutページへ遷移する
   def after_sign_in_path_for(resource)
-    about_path
+    post_images_path
   end
 
   def after_sign_out_path_for(resource)
     about_path
   end
 
-  protected
 
-  def configure_permitted_parameters
-    devise_parameter_sanitizer.permit(:sign_up, keys: [:name])
+  def get_profile_image(width, height)
+    unless profile_image.attached?
+      file_path = Rails.root.join('app/assets/images/sample-author1.jpg')
+      profile_image.attach(io: File.open(file_path), filename: 'default-image.jpg', content_type: 'image/jpeg')
+    end
+    profile_image.variant(resize_to?limit: [width, height]).processed
   end
+
 
 
 end
