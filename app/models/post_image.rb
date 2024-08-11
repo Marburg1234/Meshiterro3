@@ -1,10 +1,13 @@
 class PostImage < ApplicationRecord
 
   belongs_to :user
+  has_many :post_comments, dependent: :destroy
+  has_many :favorites, dependent: :destroy
 
   # このモデルにimageといす画像を持たせる
   # ActiveStorageの設定をする　(Actove Storageと対象のModelをつなげるイメージ)
   has_one_attached :image
+
 
   # 写真を表示させるためのメソッドを定義する
   def get_iumage
@@ -21,6 +24,10 @@ class PostImage < ApplicationRecord
       image.attach(io: File.open(file_path), filename: 'default-umage.jpg', content_type: 'image/jpeg')
     end
     image
+  end
+
+  def favorited_by?(user)
+    favorites.exists?(user_id: user.id)
   end
 
 end

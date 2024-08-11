@@ -5,9 +5,21 @@
   <p>投稿ユーザー画像：<%= image_tag @post_image.user.get_profile_image(100,100) %></p>
   <p>ユーザーネーム：<%= @post_image.user.name %></p>
   <p>投稿日：<%= @post_image.created_at.strftime('%d-%B-%Y') %></p>
-  <!--削除ボタンを作成する-->
-  <!--条件分岐→投稿したユーザーがログイン中のユーザーかどうか-->
+
+  <!--削除機能・条件分岐→投稿したユーザーがログイン中のユーザーかどうか-->
   <% if @post_image.user == current_user %>
-    <%= link_to "削除", post_image_path(@post_image), method: :delete %>
+    <%= link_to "投稿削除", post_image_path(@post_image), method: :delete %>
   <% end %>
+
+  <!--いいね機能の挿入-->
+  <%= render 'favorites/favorite', post_image: @post_image %>
 </div>
+
+<!--コメントの表示部分の呼び出す-->
+<%= render 'post_comments/comment_index', post_image: @post_image %>
+
+<!--コメントを投稿するフォーム作成-->
+<%= render 'post_comments/comment_form', post_image: @post_image, post_comment: @post_comment %>
+
+
+
