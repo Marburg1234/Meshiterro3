@@ -12,6 +12,10 @@ class PostImage < ApplicationRecord
   validates :image, presence: { message: "を選択してください",  full_message: false }
   validates :caption, presence: { message: "を入力してください",  full_message: false }
 
+  validates :address, presence: true
+
+  geocoded_by :address
+  after_validation :geocode
 
   # 写真を表示させるためのメソッドを定義する
   def get_iumage

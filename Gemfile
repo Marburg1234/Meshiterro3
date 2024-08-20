@@ -60,3 +60,6 @@ gem 'devise'
 gem 'kaminari','~> 1.2.1'
 
 gem 'rails-i18n'
+
+gem 'dotenv-rails' # 追記
+gem 'geocoder' # 追加
