@@ -1,0 +1,19 @@
+ja:
+
+  activerecord:
+
+    attributes:
+
+      post_image:
+
+        shop_name: "ショップ名"
+        image: "画像"
+        caption: "説明欄"
+
+      errors:
+
+      messages:
+
+
+
+

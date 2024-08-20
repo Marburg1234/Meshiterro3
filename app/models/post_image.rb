@@ -8,9 +8,9 @@ class PostImage < ApplicationRecord
   # ActiveStorageの設定をする　(Actove Storageと対象のModelをつなげるイメージ)
   has_one_attached :image
 
-  validates :shop_name, presence:true
-  validates :image, presence:true
-  validates :caption, presence:true
+  validates :shop_name, presence: { message: "の入力は必須です",  full_message: false }
+  validates :image, presence: { message: "を選択してください",  full_message: false }
+  validates :caption, presence: { message: "を入力してください",  full_message: false }
 
 
   # 写真を表示させるためのメソッドを定義する
