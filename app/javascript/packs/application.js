@@ -11,6 +11,9 @@ import "jquery";
 import "popper.js";
 import "bootstrap";
 import "../stylesheets/application";
+import "./map";
+
+
 
 Rails.start()
 Turbolinks.start()

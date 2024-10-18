@@ -13,3 +13,28 @@
  *= require_tree .
  *= require_self
  */
+.swiper {
+   width: 700px;
+   height: 600px;}
+  :root{
+  --swiper-navigation-color: #ffffff;
+  --swiper-navigation-color: #ffffff;
+}
+
+.swiper-slide > img {
+   object-fit: cover; /* IE: not support */
+   width: 100%;
+   height: 100%;
+}
+
+.swiper-button-prev{
+   color: red;
+}
+
+.swiper-button-next{
+   color:red;
+}
+
+.ja{
+   color: red;
+}

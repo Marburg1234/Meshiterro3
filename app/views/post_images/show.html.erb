@@ -1,25 +1,68 @@
-<div>
-  <%= image_tag @post_image.get_image %>
-  <p>ショップ名：<%= @post_image.shop_name %></p>
-  <p>説明：<%= @post_image.caption %></p>
-  <p>投稿ユーザー画像：<%= image_tag @post_image.user.get_profile_image(100,100) %></p>
-  <p>ユーザーネーム：<%= @post_image.user.name %></p>
-  <p>投稿日：<%= @post_image.created_at.strftime('%d-%B-%Y') %></p>
+<h1 class="ja">やー</h1>
 
-  <!--削除機能・条件分岐→投稿したユーザーがログイン中のユーザーかどうか-->
-  <% if @post_image.user == current_user %>
-    <%= link_to "投稿削除", post_image_path(@post_image), method: :delete %>
-  <% end %>
+<div class="container">
+  <div class="row mb-4">
 
-  <!--いいね機能の挿入-->
-  <%= render 'favorites/favorite', post_image: @post_image %>
+    <div class="swiper">
+      <div class="swiper-wrapper">
+        <% @post_image.images.each do |image| %>
+          <div class="swiper-slide">
+            <%= image_tag image %>
+          </div>
+        <% end %>
+      </div>
+      <div class="swiper-pagination"></div>
+      <div class="swiper-button-prev"></div>
+      <div class="swiper-button-next"></div>
+      <div class="swiper-scrollbar"></div>
+<%= javascript_include_tag 'swiper.js' %>
+    </div>
+
+
+
+
+    </div>
+  </div>
+  <div class="row mb-4">
+    <div class="col text-center">
+      <div><%= image_tag @post_image.user.get_profile_image(200,150) %></div>
+      <div>ユーザー：<%= @post_image.user.name %></div>
+      </div>
+      <div class="col">
+        <%= link_to(post_image_path(@post_image.id), class:"text-dark") do %>
+         <strong><i class="fa-solid fa-flag"></i><span> <%= @post_image.shop_name %></span></strong>
+        <% end %>
+      </p>
+      <p class="card-title">
+        <span><i class="fa-solid fa-location-dot"></i> <%= @post_image.address %></span>
+      </p>
+    <p class="card-title">説明：<%= @post_image.caption %></p>
+    <p>投稿日：<%= @post_image.created_at.strftime('%d-%B-%Y') %></p>
+    </div>
+  </div>
+
+
+
+
+      <div class="row">
+        <div class="col text-center">
+    <!--削除機能・条件分岐→投稿したユーザーがログイン中のユーザーかどうか-->
+    <% if @post_image.user == current_user %>
+      <%= link_to "投稿削除", post_image_path(@post_image), method: :delete, class: 'btn btn-danger btn-sm mb-2' %>
+    <% end %>
+    <br/>
+    <!--いいね機能の挿入-->
+    <%= render 'favorites/favorite', post_image: @post_image %>
+
+
+  <!--コメントの表示部分の呼び出す-->
+  <%= render 'post_comments/comment_index', post_image: @post_image %>
+    </div>
+    <div class="col">
+  <!--コメントを投稿するフォーム作成-->
+  <%= render 'post_comments/comment_form', post_image: @post_image, post_comment: @post_comment %>
+    </div>
+
+    </div>
+  </div>
 </div>
-
-<!--コメントの表示部分の呼び出す-->
-<%= render 'post_comments/comment_index', post_image: @post_image %>
-
-<!--コメントを投稿するフォーム作成-->
-<%= render 'post_comments/comment_form', post_image: @post_image, post_comment: @post_comment %>
-
-
-

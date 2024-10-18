@@ -1,5 +1,6 @@
 Rails.application.routes.draw do
 
+
   devise_for :users
   root to: 'homes#top'
   get 'homes/about' => 'homes#about', as: 'about'
@@ -12,4 +13,5 @@ Rails.application.routes.draw do
 
   resources :users, only: [:edit, :show, :update]
 
+  resource :map, only: [:show] # 追記
 end

@@ -3,13 +3,13 @@ class PostImagesController < ApplicationController
   # newでは新たに投稿するデータを収める箱を作ってあげる=空の箱を用意しておく
   # form_withに渡すための箱
   def new
-    @post_image = PostImage.new
+    @post_images = PostImage.new
   end
 
   def create
-    @post_image = PostImage.new(post_image_params)
-    @post_image.user_id = current_user.id #投稿記事のユーザーidにログイン中のユーザーidを代入する PostImageモデルのuser_idにUserモデルのidを入れる
-    if @post_image.save
+    @post_images = PostImage.new(post_image_params)
+    @post_images.user_id = current_user.id #投稿記事のユーザーidにログイン中のユーザーidを代入する PostImageモデルのuser_idにUserモデルのidを入れる
+    if @post_images.save
       redirect_to post_images_path
     else
       render :new
@@ -17,9 +17,15 @@ class PostImagesController < ApplicationController
   end
 
   def index
-    # @post_images = PostImage.all
-    # ページネーションでページごとのデータを取得するように設定する
-    @post_images = PostImage.page(params[:page])
+    respond_to do |format|
+      format.html do
+        @post_images = PostImage.page(params[:page])
+      end
+      format.json do
+        @post_images = PostImage.all
+        # @first_image_url = url_for(@post.images.first) if @post.images.attached?
+      end
+    end
   end
 
   def show
@@ -37,7 +43,7 @@ class PostImagesController < ApplicationController
   private
 
   def post_image_params
-    params.require(:post_image).permit(:shop_name, :caption, :image)
+    params.require(:post_image).permit(:shop_name, :caption, :address, images: [])
   end
 
 end
