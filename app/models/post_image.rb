@@ -3,6 +3,7 @@ class PostImage < ApplicationRecord
   belongs_to :user
   has_many :post_comments, dependent: :destroy
   has_many :favorites, dependent: :destroy
+  has_many :visit_counts, dependent: :destroy
 
   # このモデルにimageといす画像を持たせる
   # ActiveStorageの設定をする　(Actove Storageと対象のModelをつなげるイメージ)

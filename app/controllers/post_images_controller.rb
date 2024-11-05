@@ -31,6 +31,13 @@ class PostImagesController < ApplicationController
   def show
     @post_image = PostImage.find(params[:id])
     @post_comment = PostComment.new
+    #ページ閲覧のレコードを作る
+    @post_image_user = @post_image.user
+    user = current_user
+    if user != @post_image_user
+      user.visit_counts.create(post_image_id: @post_image.id)
+    end
+    @page_visit_counts = page_visit_counts
   end
 
   def destroy
@@ -46,4 +53,7 @@ class PostImagesController < ApplicationController
     params.require(:post_image).permit(:shop_name, :caption, :address, images: [])
   end
 
+  def page_visit_counts
+    @post_image.visit_counts.count
+  end
 end

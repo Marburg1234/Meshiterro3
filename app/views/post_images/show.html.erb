@@ -29,7 +29,7 @@
       <div>ユーザー：<%= @post_image.user.name %></div>
       </div>
       <div class="col">
-        <%= link_to(post_image_path(@post_image.id), class:"text-dark") do %>
+        <%= link_to(post_image_path(@post_image.id), class: "text-dark") do %>
          <strong><i class="fa-solid fa-flag"></i><span> <%= @post_image.shop_name %></span></strong>
         <% end %>
       </p>
@@ -38,6 +38,11 @@
       </p>
     <p class="card-title">説明：<%= @post_image.caption %></p>
     <p>投稿日：<%= @post_image.created_at.strftime('%d-%B-%Y') %></p>
+    <% if @page_visit_counts >= 10 %>
+      <p class="bg-danger text-light">閲覧数：<%= @page_visit_counts %></p>
+    <% elsif @page_visit_counts >= 5 %>
+      <p class="bg-warning">閲覧数：<%= @page_visit_counts %></p>
+    <% end %>
     </div>
   </div>
 
